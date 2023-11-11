@@ -1,7 +1,11 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import LocalFireDepartmentRoundedIcon from "@mui/icons-material/LocalFireDepartmentRounded";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
 
-function Navbar() {
+async function Navbar() {
+  const session = await getServerSession(authOptions);
+
   const navigation = [
     { name: "Home", href: "#", current: true },
     { name: "Campground", href: "#", current: false },
@@ -42,12 +46,21 @@ function Navbar() {
           </nav>
         </nav>
         <nav className="flex">
-          <Link
-            href={"/api/auth/signin"}
-            className="text-gray-900 hover:text-gray-500 text-sm font-medium"
-          >
-            Sign In
-          </Link>
+          {!session ? (
+            <Link
+              href={"/api/auth/signin"}
+              className="text-gray-900 hover:text-gray-500 text-sm font-medium"
+            >
+              Sign In
+            </Link>
+          ) : (
+            <Link
+              href={"/api/auth/signout"}
+              className="text-gray-900 hover:text-gray-500 text-sm font-medium"
+            >
+              Sign Out
+            </Link>
+          )}
         </nav>
       </div>
     </div>
