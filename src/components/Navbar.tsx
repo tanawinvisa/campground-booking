@@ -43,10 +43,10 @@ function Navbar() {
         </nav>
         <nav className="flex">
           <Link
-            href={"#"}
+            href={"/api/auth/signin"}
             className="text-gray-900 hover:text-gray-500 text-sm font-medium"
           >
-            Logout
+            SignIn
           </Link>
         </nav>
       </div>

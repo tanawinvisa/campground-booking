@@ -14,7 +14,7 @@ export default async function userLogIn(
   });
 
   if (!response.ok) {
-    throw new Error("Failed to fetch cars");
+    throw new Error("Authentication Failed");
   }
   return await response.json();
 }

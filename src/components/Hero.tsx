@@ -12,7 +12,7 @@ export default function Hero() {
               <br />
               <span className="text-amber-800">Campground</span>
             </h2>
-            <p className="mt-6 text-lg leading-8 text-gray-800">
+            <p className="z-10 mt-6 text-lg leading-8 text-gray-800">
               Our website brings the ease of digital booking to the great
               outdoors, ensuring a seamless user experience from the comfort of
               your screen to the comfort of your tent.
@@ -28,7 +28,7 @@ export default function Hero() {
           </div>
           <div className="relative mt-12 h-80 lg:mt-8 ">
             <Image
-              className="absolute -top-32 w-[60rem] max-w-none"
+              className="absolute -top-48 w-[60rem] max-w-none"
               src={"/images/camping.svg"}
               alt="camping"
               width={1824}
