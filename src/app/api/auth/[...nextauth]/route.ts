@@ -1,4 +1,4 @@
-import userLogIn from "@/libs/userLogin";
+import userLogIn from "@/services/userLogin";
 import NextAuth from "next-auth";
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";

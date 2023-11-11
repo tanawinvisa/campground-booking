@@ -7,7 +7,7 @@ async function Navbar() {
   const session = await getServerSession(authOptions);
 
   const navigation = [
-    { name: "Home", href: "#", current: true },
+    { name: "Home", href: "/", current: true },
     { name: "Campground", href: "#", current: false },
     { name: "Booking", href: "#", current: false },
   ];
@@ -48,7 +48,7 @@ async function Navbar() {
         <nav className="flex">
           {!session ? (
             <Link
-              href={"/api/auth/signin"}
+              href={"/auth/signin"}
               className="text-gray-900 hover:text-gray-500 text-sm font-medium"
             >
               Sign In

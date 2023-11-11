@@ -102,7 +102,7 @@ export default function SignIn(props: Props) {
           <p className="text-center text-sm text-gray-500">
             Not a member?{" "}
             <a
-              href="#"
+              href="/auth/signup"
               className="font-semibold leading-6 text-amber-600 hover:text-amber-500"
             >
               Sign up now
