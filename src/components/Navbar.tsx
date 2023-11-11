@@ -46,7 +46,7 @@ function Navbar() {
             href={"/api/auth/signin"}
             className="text-gray-900 hover:text-gray-500 text-sm font-medium"
           >
-            SignIn
+            Sign In
           </Link>
         </nav>
       </div>
