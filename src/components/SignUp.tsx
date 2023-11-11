@@ -27,8 +27,22 @@ export default function SignUp() {
     }
   };
 
+  const [passwordError, setPasswordError] = useState("");
+
+  const validatePasswords = () => {
+    if (password !== password2) {
+      setPasswordError("Passwords do not match!");
+      return false;
+    }
+    setPasswordError(""); // Clear error message if passwords match
+    return true;
+  };
+
   const onSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
+    if (!validatePasswords()) {
+      return; // Stop the form submission if passwords don't match
+    }
     try {
       const User = await userService.create({
         email,
@@ -99,7 +113,9 @@ export default function SignUp() {
                   placeholder="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="px-5 py-2 border-gray-300 border-[1px] rounded-2xl"
+                  className={`px-5 py-2 border-${
+                    passwordError ? "red-500" : "gray-300"
+                  } border-[1px] rounded-2xl`}
                 ></input>
               </div>
               <div className="flex flex-col gap-2 col-span-2">
@@ -110,8 +126,13 @@ export default function SignUp() {
                   placeholder="Type password again"
                   value={password2}
                   onChange={(e) => setPassword2(e.target.value)}
-                  className="px-5 py-2 border-gray-300 border-[1px] rounded-2xl"
+                  className={`px-5 py-2 border-${
+                    passwordError ? "red-500" : "gray-300"
+                  } border-[1px] rounded-2xl`}
                 ></input>
+                {passwordError && (
+                  <p className="text-red-500">{passwordError}</p>
+                )}
               </div>
               <div className="flex flex-col gap-2">
                 <label htmlFor="firstName">Name</label>
