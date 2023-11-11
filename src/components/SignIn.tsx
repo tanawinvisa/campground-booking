@@ -3,6 +3,7 @@ import LocalFireDepartmentRoundedIcon from "@mui/icons-material/LocalFireDepartm
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Modal from "./Modal";
 
 type Props = {
   callbackUrl?: string;
@@ -15,6 +16,13 @@ export default function SignIn(props: Props) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await signIn("credentials", {
@@ -24,13 +32,23 @@ export default function SignIn(props: Props) {
     });
 
     if (res?.error) {
-      setError(res.error);
+      setModalMessage("An error occurred while login. " + res.error);
+      setIsModalOpen(true);
     } else {
       router.push(props.callbackUrl ?? "/");
     }
   };
   return (
     <>
+      <Modal isOpen={isModalOpen} closeModal={closeModal} title="Signin Error">
+        <p>{modalMessage}</p>
+        <button
+          onClick={closeModal}
+          className="mt-4 py-2 px-4 text-white rounded-md bg-red-400"
+        >
+          Close
+        </button>
+      </Modal>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         {error ? <div className="text-2xl tex-red-500">{error}</div> : ""}
         <div className="flex flex-col justify-center items-center gap-10">
