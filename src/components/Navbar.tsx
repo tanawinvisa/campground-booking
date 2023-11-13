@@ -1,12 +1,21 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import LocalFireDepartmentRoundedIcon from "@mui/icons-material/LocalFireDepartmentRounded";
 import Link from "next/link";
 import SignInButton from "./SignInButton";
 
 function Navbar() {
+  const pathname = usePathname();
+
   const navigation = [
-    { name: "Home", href: "/", current: true },
-    { name: "Campground", href: "#", current: false },
-    { name: "Booking", href: "#", current: false },
+    { name: "Home", href: "/", current: pathname === "/" },
+    {
+      name: "Campground",
+      href: "/campground",
+      current: pathname === "/campground",
+    },
+    { name: "Booking", href: "/booking", current: pathname === "/booking" },
   ];
 
   function classNames(...classes: string[]) {
