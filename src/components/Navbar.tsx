@@ -21,10 +21,7 @@ async function Navbar() {
       <div className="relative flex h-16 items-center justify-between">
         <nav className="flex flex-1 h-full items-center justify-center sm:items-stretch sm:justify-start">
           <div className="flex flex-shrink-0 items-center px-2">
-            <LocalFireDepartmentRoundedIcon
-              className="h-8 w-auto"
-              style={{ color: "#f59e0b" }}
-            />
+            <LocalFireDepartmentRoundedIcon className="h-8 w-auto text-amber-500" />
           </div>
 
           <nav className="flex items-center gap-6 px-4">
