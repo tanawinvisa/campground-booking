@@ -1,15 +1,21 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import LocalFireDepartmentRoundedIcon from "@mui/icons-material/LocalFireDepartmentRounded";
-import { getServerSession } from "next-auth";
-import Link from "next/link";
+"use client";
 
-async function Navbar() {
-  const session = await getServerSession(authOptions);
+import { usePathname } from "next/navigation";
+import LocalFireDepartmentRoundedIcon from "@mui/icons-material/LocalFireDepartmentRounded";
+import Link from "next/link";
+import SignInButton from "./SignInButton";
+
+function Navbar() {
+  const pathname = usePathname();
 
   const navigation = [
-    { name: "Home", href: "/", current: true },
-    { name: "Campground", href: "#", current: false },
-    { name: "Booking", href: "#", current: false },
+    { name: "Home", href: "/", current: pathname === "/" },
+    {
+      name: "Campground",
+      href: "/campground",
+      current: pathname === "/campground",
+    },
+    { name: "Booking", href: "/booking", current: pathname === "/booking" },
   ];
 
   function classNames(...classes: string[]) {
@@ -21,10 +27,7 @@ async function Navbar() {
       <div className="relative flex h-16 items-center justify-between">
         <nav className="flex flex-1 h-full items-center justify-center sm:items-stretch sm:justify-start">
           <div className="flex flex-shrink-0 items-center px-2">
-            <LocalFireDepartmentRoundedIcon
-              className="h-8 w-auto"
-              style={{ color: "#f59e0b" }}
-            />
+            <LocalFireDepartmentRoundedIcon className="h-8 w-auto text-amber-500" />
           </div>
 
           <nav className="flex items-center gap-6 px-4">
@@ -45,23 +48,7 @@ async function Navbar() {
             ))}
           </nav>
         </nav>
-        <nav className="flex">
-          {!session ? (
-            <Link
-              href={"/auth/signin"}
-              className="text-gray-900 hover:text-gray-500 text-sm font-medium"
-            >
-              Sign In
-            </Link>
-          ) : (
-            <Link
-              href={"/api/auth/signout"}
-              className="text-gray-900 hover:text-gray-500 text-sm font-medium"
-            >
-              Sign Out
-            </Link>
-          )}
-        </nav>
+        <SignInButton />
       </div>
     </div>
   );

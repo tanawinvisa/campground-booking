@@ -77,7 +77,7 @@ export default function SignUp() {
         </button>
       </Modal>
       <div className="grid grid-cols-3 h-full items-center ">
-        <div className="flex flex-col items-center justify-center h-full bg-white col-span-2 ">
+        <div className="flex flex-col items-center px-5 justify-center h-full bg-white col-span-3 lg:col-span-2">
           <div className="flex flex-col gap-5">
             <div>
               <h2 className="text-2xl font-bold leading-9  text-gray-900">
@@ -165,7 +165,7 @@ export default function SignUp() {
             </form>
           </div>
         </div>
-        <div className="relative h-full w-full flex flex-col items-center justify-center">
+        <div className="relative h-full w-full flex flex-col items-center justify-center invisible lg:visible">
           <Image
             className="object-cover overflow-hidden"
             src={"/images/signup.png"}

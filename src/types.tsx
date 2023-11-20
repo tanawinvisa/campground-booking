@@ -12,3 +12,13 @@ export interface NewUser {
   tel: string;
   role: string;
 }
+
+export interface Booking {
+  bookingDate: string;
+  checkoutDate: string;
+  user: string;
+  campground: string;
+  createdAt: string;
+}
+
+export type NewBooking = Omit<Booking, "user" | "campground">;
