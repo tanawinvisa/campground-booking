@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { apiBaseUrl } from "../constants";
-import { Booking, NewBooking } from "@/types";
+import { Booking, Bookings, NewBooking } from "@/types";
 
 let token: string | null = null;
 
@@ -13,8 +13,7 @@ const getAll = async () => {
   const config = {
     headers: { Authorization: token },
   };
-  const { data } = await axios.get<Booking[]>(`${apiBaseUrl}/bookings`, config);
-
+  const { data } = await axios.get<Bookings>(`${apiBaseUrl}/bookings`, config);
   return data;
 };
 
