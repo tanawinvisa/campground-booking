@@ -21,4 +21,14 @@ export interface Booking {
   createdAt: string;
 }
 
+export interface Campground{
+  name: string,
+  address: string,
+  district: string,
+  province: string,
+  postalcode: string,
+  tel: string,
+  picture: string
+}
+
 export type NewBooking = Omit<Booking, "user" | "campground">;
