@@ -56,6 +56,18 @@ const create = async (campground: Campground) => {
   return data;
 };
 
-const campgroundService = { setToken, getAll, get, remove, create };
+const update = async (campground: Campground, id: string) => {
+  const config = {
+    headers: { Authorization: token },
+  };
+  const response = await axios.put(
+    `${apiBaseUrl}/campgrounds/${id}`,
+    campground,
+    config
+  );
+  return response.data;
+};
+
+const campgroundService = { setToken, getAll, get, remove, create, update };
 
 export default campgroundService;
