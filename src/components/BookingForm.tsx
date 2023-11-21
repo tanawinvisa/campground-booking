@@ -4,10 +4,11 @@ import bookingService from "@/services/booking";
 import campgroundService from "@/services/campground";
 import { Campground } from "@/types";
 import { useSession } from "next-auth/react";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import Modal from "./Modal";
 import { AxiosError } from "axios";
+import { useCampground } from "@/hooks/campgroundHook";
 
 interface Props {
   campgroundId: string;
@@ -22,49 +23,28 @@ export default function BookingForm({
   oldCheckoutDate,
   editingBookingId,
 }: Props) {
-  const [bookingDate, setBookingDate] = useState("");
-  const [checkoutDate, setCheckoutDate] = useState("");
-  const [campground, setCampground] = useState(null as null | Campground);
+  const [bookingDate, setBookingDate] = useState(oldBookingDate || "");
+  const [checkoutDate, setCheckoutDate] = useState(oldCheckoutDate || "");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(true);
+  const { campground, error: campgroundError } = useCampground(campgroundId);
   const router = useRouter();
-
-  useEffect(() => {
-    if (oldBookingDate) {
-      setBookingDate(oldBookingDate);
-    }
-
-    if (oldCheckoutDate) {
-      setCheckoutDate(oldCheckoutDate);
-    }
-  }, [oldBookingDate, oldCheckoutDate]);
-
   const { data: session } = useSession();
+
   useEffect(() => {
-    if (session && session.user) {
+    if (session?.user?.token) {
       bookingService.setToken(session.user.token);
     }
   }, [session]);
 
   useEffect(() => {
-    const fetchCampground = async () => {
-      try {
-        const data = await campgroundService.get(campgroundId);
-        setCampground(data.data);
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          setModalMessage(error.response?.data.message);
-        } else {
-          setModalMessage("Error fetching campground:");
-        }
-        setIsSuccess(false);
-        setIsModalOpen(true);
-      }
-    };
-
-    fetchCampground();
-  }, [campgroundId]);
+    if (campgroundError) {
+      setModalMessage(campgroundError);
+      setIsSuccess(false);
+      setIsModalOpen(true);
+    }
+  }, [campgroundError]);
 
   const handleCancel = () => {
     setBookingDate("");
@@ -73,38 +53,24 @@ export default function BookingForm({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (editingBookingId) {
-      e.preventDefault();
-      const newBooking = { bookingDate, checkoutDate };
-      try {
+    const newBooking = { bookingDate, checkoutDate };
+
+    try {
+      if (editingBookingId) {
         await bookingService.update(newBooking, editingBookingId);
         setModalMessage("Booking successfully updated!");
-        setIsSuccess(true);
-        setIsModalOpen(true);
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          setModalMessage(error.response?.data.message);
-        } else {
-          setModalMessage("Error occurred while editing booking.");
-        }
-        setIsSuccess(false);
-        setIsModalOpen(true);
+      } else {
+        await bookingService.create(newBooking, campgroundId);
+        setModalMessage("Booking successfully created!");
       }
-      return;
-    }
-
-    const newBooking = { bookingDate, checkoutDate };
-    try {
-      await bookingService.create(newBooking, campgroundId);
-      setModalMessage("Booking successfully created!");
       setIsSuccess(true);
       setIsModalOpen(true);
     } catch (error) {
-      if (error instanceof AxiosError) {
-        setModalMessage(error.response?.data.message);
-      } else {
-        setModalMessage("Error occurred while creating booking.");
-      }
+      const errorMessage =
+        error instanceof AxiosError
+          ? error.response?.data.message
+          : "Error occurred while processing booking.";
+      setModalMessage(errorMessage);
       setIsSuccess(false);
       setIsModalOpen(true);
     }
