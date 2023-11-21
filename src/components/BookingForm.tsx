@@ -1,6 +1,8 @@
 "use client";
 
 import bookingService from "@/services/booking";
+import campgroundService from "@/services/campground";
+import { Campground } from "@/types";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -12,12 +14,27 @@ interface Props {
 export default function BookingForm({ campgroundId }: Props) {
   const [bookingDate, setBookingDate] = useState("");
   const [checkoutDate, setCheckoutDate] = useState("");
+  const [campground, setCampground] = useState(null as null | Campground);
+
   const { data: session } = useSession();
   useEffect(() => {
     if (session && session.user) {
       bookingService.setToken(session.user.token);
     }
   }, [session]);
+
+  useEffect(() => {
+    const fetchCampground = async () => {
+      try {
+        const data = await campgroundService.get(campgroundId);
+        setCampground(data.data);
+      } catch (error) {
+        console.error("Error fetching campground:", error);
+      }
+    };
+
+    fetchCampground();
+  }, [campgroundId]);
 
   const handleCancel = () => {
     setBookingDate("");
@@ -42,7 +59,9 @@ export default function BookingForm({ campgroundId }: Props) {
           <h2 className="text-base font-semibold leading-7 text-gray-900">
             Book Your Stay
           </h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">Khao Yai</p>
+          <p className="mt-1 text-sm leading-6 text-gray-600">
+            {campground?.name}
+          </p>
         </div>
         <div className="mt-10 grid gap-x-6 gap-y-8 sm:grid-cols-6">
           <div className="sm:col-span-6">

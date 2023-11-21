@@ -13,17 +13,19 @@ const getAll = async () => {
   const config = {
     headers: { Authorization: token },
   };
-  const { data } = await axios.get<Campground[]>(`${apiBaseUrl}/campgrounds`, config);
+  const { data } = await axios.get<Campground[]>(
+    `${apiBaseUrl}/campgrounds`,
+    config
+  );
 
   return data;
 };
-
 
 const get = async (id: string) => {
   const config = {
     headers: { Authorization: token },
   };
-  const { data } = await axios.get<Campground>(
+  const { data } = await axios.get<{ success: boolean; data: Campground }>(
     `${apiBaseUrl}/campgrounds/${id}`,
     config
   );
@@ -34,11 +36,13 @@ const remove = async (id: string) => {
   const config = {
     headers: { Authorization: token },
   };
-  const response = await axios.delete(`${apiBaseUrl}/campgrounds/${id}`, config);
+  const response = await axios.delete(
+    `${apiBaseUrl}/campgrounds/${id}`,
+    config
+  );
 
   return response.data;
 };
-
 
 const campgroundService = { setToken, getAll, get, remove };
 
