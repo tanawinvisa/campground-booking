@@ -9,12 +9,30 @@ import { useEffect, useState } from "react";
 
 interface Props {
   campgroundId: string;
+  oldBookingDate: string;
+  oldCheckoutDate: string;
+  editingBookingId: string;
 }
 
-export default function BookingForm({ campgroundId }: Props) {
+export default function BookingForm({
+  campgroundId,
+  oldBookingDate,
+  oldCheckoutDate,
+  editingBookingId,
+}: Props) {
   const [bookingDate, setBookingDate] = useState("");
   const [checkoutDate, setCheckoutDate] = useState("");
   const [campground, setCampground] = useState(null as null | Campground);
+
+  useEffect(() => {
+    if (oldBookingDate) {
+      setBookingDate(oldBookingDate);
+    }
+
+    if (oldCheckoutDate) {
+      setCheckoutDate(oldCheckoutDate);
+    }
+  }, [oldBookingDate, oldCheckoutDate]);
 
   const { data: session } = useSession();
   useEffect(() => {
@@ -43,6 +61,21 @@ export default function BookingForm({ campgroundId }: Props) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (editingBookingId) {
+      e.preventDefault();
+      const newBooking = { bookingDate, checkoutDate };
+      try {
+        const booking = await bookingService.update(
+          newBooking,
+          editingBookingId
+        );
+        console.log("Booking Edited:", booking);
+      } catch (error) {
+        console.error("Error editing booking:", error);
+      }
+      return;
+    }
+
     const newBooking = { bookingDate, checkoutDate };
     try {
       const booking = await bookingService.create(newBooking, campgroundId);
