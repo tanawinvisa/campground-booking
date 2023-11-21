@@ -22,7 +22,7 @@ const create = async (newBooking: NewBooking, campgroundId: string) => {
     headers: { Authorization: token },
   };
   const { data } = await axios.post<Booking>(
-    `${apiBaseUrl}/campgrounds/${campgroundId}/booking`,
+    `${apiBaseUrl}/campgrounds/${campgroundId}/bookings`,
     newBooking,
     config
   );

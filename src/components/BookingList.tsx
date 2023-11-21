@@ -10,7 +10,7 @@ import FireplaceIcon from "@mui/icons-material/Fireplace";
 import Modal from "./Modal";
 import PersonIcon from "@mui/icons-material/Person";
 
-export default function BookingForm() {
+export default function BookingList() {
   const { data: session } = useSession();
   const [bookings, setBookings] = useState([] as Booking[]);
   useEffect(() => {

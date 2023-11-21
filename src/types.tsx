@@ -19,17 +19,19 @@ export interface Booking {
   checkoutDate: string;
   user: User;
   campground: Campground;
-  createdAt: string;
+  createdAt?: string;
 }
 
-export interface Campground{
-  name: string,
-  address: string,
-  district: string,
-  province: string,
-  postalcode: string,
-  tel: string,
-  picture: string
+export type NewBooking = Omit<Booking, "user" | "campground" | "_id">;
+
+export interface Campground {
+  name: string;
+  address: string;
+  district: string;
+  province: string;
+  postalcode: string;
+  tel: string;
+  picture: string;
 }
 
 export interface bookingCampground {
@@ -44,5 +46,3 @@ export interface Bookings {
   count: number;
   data: Booking[];
 }
-
-export type NewBooking = Omit<Booking, "user" | "campground">;
