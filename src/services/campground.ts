@@ -30,7 +30,16 @@ const get = async (id: string) => {
   return data;
 };
 
+const remove = async (id: string) => {
+  const config = {
+    headers: { Authorization: token },
+  };
+  const response = await axios.delete(`${apiBaseUrl}/campgrounds/${id}`, config);
 
-const campgroundService = { setToken, getAll, get };
+  return response.data;
+};
+
+
+const campgroundService = { setToken, getAll, get, remove };
 
 export default campgroundService;
