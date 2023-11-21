@@ -1,8 +1,6 @@
 "use client";
 
 import bookingService from "@/services/booking";
-import campgroundService from "@/services/campground";
-import { Campground } from "@/types";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";

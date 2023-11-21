@@ -4,46 +4,38 @@ import bookingService from "@/services/booking";
 import { Booking } from "@/types";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
-import FireplaceIcon from "@mui/icons-material/Fireplace";
 import Modal from "./Modal";
-import PersonIcon from "@mui/icons-material/Person";
-import Link from "next/link";
+import BookingItem from "./BookingItem";
 
 export default function BookingList() {
   const { data: session } = useSession();
-  const [bookings, setBookings] = useState([] as Booking[]);
-
-  useEffect(() => {
-    if (session && session.user) {
-      bookingService.setToken(session.user.token);
-      console.log(session.user.role);
-      bookingService.getAll().then((response) => {
-        const filteredBookings =
-          session.user.role === "admin"
-            ? response.data
-            : response.data.filter(
-                (booking) => booking.user._id === session.user._id
-              );
-        setBookings(filteredBookings);
-      });
-    }
-  }, [session]);
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString(undefined, {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [currentBookingId, setCurrentBookingId] = useState<string | null>(null);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
-  const [currentBookingId, setCurrentBookingId] = useState(
-    null as string | null
-  );
+
+  useEffect(() => {
+    async function fetchBookings() {
+      if (session?.user) {
+        try {
+          bookingService.setToken(session.user.token);
+          const response = await bookingService.getAll();
+          const filteredBookings =
+            session.user.role === "admin"
+              ? response.data
+              : response.data.filter(
+                  (booking) => booking.user._id === session.user._id
+                );
+          setBookings(filteredBookings);
+        } catch (error) {
+          console.error("Error fetching bookings:", error);
+        }
+      }
+    }
+
+    fetchBookings();
+  }, [session]);
+
   const openConfirmModal = (id: string) => {
     setCurrentBookingId(id);
     setIsConfirmModalOpen(true);
@@ -113,61 +105,11 @@ export default function BookingList() {
       </Modal>
       <ul role="list" className="space-y-4 divide-y divide-gray-100">
         {bookings.map((booking) => (
-          <li key={booking._id} className=" overflow-hidden  px-6 py-4 ">
-            <div className="flex flex-col sm:flex-row items-start justify-between space-y-4 sm:space-y-0 sm:space-x-4">
-              <div className="flex items-start space-x-4">
-                <FireplaceIcon className="h-5 w-5 text-amber-500" />
-                <div>
-                  <h2 className="font-semibold text-lg text-gray-900">
-                    {booking.campground.name}
-                  </h2>
-                  <p className="flex items-center  text-gray-500">
-                    <LocationOnIcon className="h-5 w-5 mr-1 text-gray-500" />
-                    {booking.campground.address}
-                  </p>
-                  <p className="flex items-center text-gray-500">
-                    <LocalPhoneIcon className="h-5 w-5 mr-1 text-gray-500" />
-                    {booking.campground.tel}
-                  </p>
-                  {session && session.user.role === "admin" && (
-                    <p className="flex items-center text-gray-500">
-                      <PersonIcon className="h-5 w-5 mr-1 text-gray-500" />
-                      {booking.user.name}
-                    </p>
-                  )}
-                </div>
-              </div>
-              <div className="flex flex-col items-start sm:items-end space-y-2">
-                <p className="text-gray-900">
-                  Booking: {formatDate(booking.bookingDate)}
-                </p>
-                <p className="text-gray-900">
-                  Checkout: {formatDate(booking.checkoutDate)}
-                </p>
-                <div className="flex gap-2">
-                  <Link
-                    className=" text-gray-900  focus:outline-none focus:shadow-outline"
-                    href={{
-                      pathname: `/booking/${booking._id}`,
-                      query: {
-                        campgroundId: booking.campground.id,
-                        bookingDate: booking.bookingDate,
-                        checkoutDate: booking.checkoutDate,
-                      },
-                    }}
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    className="text-red-500 focus:outline-none focus:shadow-outline"
-                    onClick={() => openConfirmModal(booking._id)}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          </li>
+          <BookingItem
+            key={booking._id}
+            booking={booking}
+            handleCancelClick={openConfirmModal}
+          />
         ))}
       </ul>
     </div>
