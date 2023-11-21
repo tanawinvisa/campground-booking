@@ -44,6 +44,18 @@ const remove = async (id: string) => {
   return response.data;
 };
 
-const campgroundService = { setToken, getAll, get, remove };
+const create = async (campground: Campground) => {
+  const config = {
+    headers: { Authorization: token },
+  };
+  const { data } = await axios.post<Campground>(
+    `${apiBaseUrl}/campgrounds`,
+    campground,
+    config
+  );
+  return data;
+};
+
+const campgroundService = { setToken, getAll, get, remove, create };
 
 export default campgroundService;

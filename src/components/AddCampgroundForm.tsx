@@ -1,46 +1,61 @@
+'use client'
+import { revalidateTag } from "next/cache"
+import { redirect } from "next/navigation"
+import { useState, useEffect } from "react"
+import { useSession } from "next-auth/react"
+import campgroundService from "@/services/campground"
+
+
 export default function AddCampgroundForm (){
+    
 
-    const addHospital = async (addHospital: FormData) => {
-        "use server"
-        const name = addHospital.get("name")
-        const address = addHospital.get("address")
-        const district = addHospital.get("district")
-        const province = addHospital.get("province")
-        const postalcode = addHospital.get("postalcode")
-        const tel = addHospital.get("tel")
-        const picture = addHospital.get("picture")
-        console.log(name,address,district,province,postalcode,tel,picture)
+    const [name, setName] = useState<string>("");
+    const [address, setAddress] = useState<string>("");
+    const [district, setDistrict] = useState<string>("");
+    const [province, setProvince] = useState<string>("");
+    const [postalcode, setPostalCode] = useState<string>("");
+    const [tel, setTel] = useState<string>("");
+    const [picture, setPicture] = useState<string>("");
 
-        try {
-            console.log(name,address,district,province,postalcode,tel,picture)
-            await dbConnect()
-            const hospital = await Hospital.create({
-                name,
-                address,
-                district,
-                province,
-                postalcode,
-                tel,
-                picture
-            })
-        } catch (error) {
-            console.log(error)
+    
+
+    const { data: session } = useSession();
+    useEffect(() => {
+        if (session && session.user) {
+        campgroundService.setToken(session.user.token);
         }
-        revalidateTag("hospitals")
-        redirect("/hospital")
+    }, [session]);
 
-    }
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const newCampground = { name, address, district, province, postalcode, tel, picture };
+        try {
+          const campground = await campgroundService.create(newCampground);
+          console.log("Campground created:", campground);
+        } catch (error) {
+          console.error("Error creating campground:", error);
+        }
+      };
 
     return(
         <div>
             <h1>Create Campground</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div>
                     <div>
                         <label htmlFor="name">Campground Name</label>
                     </div>
                     <div>
-                        <input type="text" placeholder="Name" id="name" name="name" required></input>
+                        <input 
+                            type="text" 
+                            placeholder="Name" 
+                            id="name" 
+                            name="name" 
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required>
+
+                        </input>
                     </div>
                 </div>
                 <div>
@@ -48,7 +63,15 @@ export default function AddCampgroundForm (){
                         <label htmlFor="address">Address</label>
                     </div>
                     <div>
-                        <input type="text" placeholder="Address" id="address" name="address" required></input>
+                        <input 
+                            type="text" 
+                            placeholder="Address" 
+                            id="address" 
+                            name="address" 
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                            required>
+                        </input>
                     </div>
                 </div>
                 <div className="flex">
@@ -57,7 +80,15 @@ export default function AddCampgroundForm (){
                             <label htmlFor="district">District</label>
                         </div>
                         <div>
-                            <input type="text" placeholder="District" id="district" name="district" required></input>
+                            <input 
+                            type="text" 
+                            placeholder="District" 
+                            id="district" 
+                            name="district" 
+                            value={district}
+                            onChange={(e) => setDistrict(e.target.value)}
+                            required>
+                            </input>
                         </div>
                     </div>
                     <div>
@@ -65,7 +96,15 @@ export default function AddCampgroundForm (){
                             <label htmlFor="province">Province</label>
                         </div>
                         <div>
-                            <input type="text" placeholder="Province" id="province" name="province" required></input>
+                            <input 
+                            type="text" 
+                            placeholder="Province" 
+                            id="province" 
+                            name="province" 
+                            value={province}
+                            onChange={(e) => setProvince(e.target.value)}
+                            required>
+                            </input>
                         </div>
                     </div>
                 </div>
@@ -75,7 +114,15 @@ export default function AddCampgroundForm (){
                             <label htmlFor="postalcode">Postal code</label>
                         </div>
                         <div>
-                            <input type="text" placeholder="Postal code" id="postalcode" name="postalcode" required></input>
+                            <input 
+                                type="text" 
+                                placeholder="Postal code" 
+                                id="postalcode" 
+                                name="postalcode" 
+                                value={postalcode}
+                                onChange={(e) => setPostalCode(e.target.value)}
+                                required>
+                            </input>
                         </div>
                     </div>
                     <div>
@@ -83,7 +130,15 @@ export default function AddCampgroundForm (){
                             <label htmlFor="tel">Phone number</label>
                         </div>
                         <div>
-                            <input type="text" placeholder="06X-XXX-XXXX" id="tel" name="tel" required></input>
+                            <input 
+                                type="text" 
+                                placeholder="06X-XXX-XXXX" 
+                                id="tel" 
+                                name="tel" 
+                                value={tel}
+                                onChange={(e) => setTel(e.target.value)}
+                                required>
+                            </input>
                         </div>
                     </div>
                 </div>
@@ -92,7 +147,15 @@ export default function AddCampgroundForm (){
                         <label htmlFor="picture">Picture URL</label>
                     </div>
                     <div>
-                        <input type="text" placeholder="URL" id="picture" name="picture" required></input>
+                        <input 
+                            type="text" 
+                            placeholder="URL" 
+                            id="picture" 
+                            name="picture" 
+                            value={picture}
+                            onChange={(e) => setPicture(e.target.value)}
+                            required>
+                        </input>
                     </div>
                 </div>
                 <div className="flex justify-center items-center">
