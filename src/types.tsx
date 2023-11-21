@@ -18,7 +18,7 @@ export interface Booking {
   bookingDate: string;
   checkoutDate: string;
   user: User;
-  campground: Campground;
+  campground: bookingCampground;
   createdAt?: string;
 }
 

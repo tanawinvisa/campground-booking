@@ -9,10 +9,12 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import FireplaceIcon from "@mui/icons-material/Fireplace";
 import Modal from "./Modal";
 import PersonIcon from "@mui/icons-material/Person";
+import Link from "next/link";
 
 export default function BookingList() {
   const { data: session } = useSession();
   const [bookings, setBookings] = useState([] as Booking[]);
+
   useEffect(() => {
     if (session && session.user) {
       bookingService.setToken(session.user.token);
@@ -143,9 +145,19 @@ export default function BookingList() {
                   Checkout: {formatDate(booking.checkoutDate)}
                 </p>
                 <div className="flex gap-2">
-                  <button className=" text-gray-900  focus:outline-none focus:shadow-outline">
+                  <Link
+                    className=" text-gray-900  focus:outline-none focus:shadow-outline"
+                    href={{
+                      pathname: `/booking/${booking._id}`,
+                      query: {
+                        campgroundId: booking.campground.id,
+                        bookingDate: booking.bookingDate,
+                        checkoutDate: booking.checkoutDate,
+                      },
+                    }}
+                  >
                     Edit
-                  </button>
+                  </Link>
                   <button
                     className="text-red-500 focus:outline-none focus:shadow-outline"
                     onClick={() => openConfirmModal(booking._id)}
