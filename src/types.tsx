@@ -25,6 +25,7 @@ export interface Booking {
 export type NewBooking = Omit<Booking, "user" | "campground" | "_id">;
 
 export interface Campground {
+  id: string;
   name: string;
   address: string;
   district: string;
@@ -32,6 +33,12 @@ export interface Campground {
   postalcode: string;
   tel: string;
   picture: string;
+}
+
+export interface Campgrounds {
+  success: boolean;
+  count: number;
+  data: Campground[];
 }
 
 export interface bookingCampground {

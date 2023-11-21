@@ -1,5 +1,5 @@
 import campgroundService from "@/services/campground";
-import { Campground } from "@/types";
+import { Campground, Campgrounds } from "@/types";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
@@ -23,4 +23,26 @@ export function useCampground(campgroundId: string) {
   }, [campgroundId]);
 
   return { campground, error };
+}
+
+export function useAllCampgrounds() {
+  const [campgrounds, setCampgrounds] = useState<Campground[] | null>(null);
+  const [error, setError] = useState<string>("");
+
+  useEffect(() => {
+    const fetchCampground = async () => {
+      try {
+        const { data } = await campgroundService.getAll();
+        setCampgrounds(data);
+      } catch (e) {
+        if (e instanceof AxiosError) {
+          setError(e.response?.data.message || "Error fetching campgrounds");
+        }
+      }
+    };
+
+    fetchCampground();
+  }, []);
+
+  return { campgrounds, error };
 }

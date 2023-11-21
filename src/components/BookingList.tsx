@@ -24,13 +24,7 @@ export default function BookingList() {
         try {
           bookingService.setToken(session.user.token);
           const response = await bookingService.getAll();
-          const filteredBookings =
-            session.user.role === "admin"
-              ? response.data
-              : response.data.filter(
-                  (booking) => booking.user._id === session.user._id
-                );
-          setBookings(filteredBookings);
+          setBookings(response.data);
         } catch (error) {
           console.error("Error fetching bookings:", error);
         } finally {
