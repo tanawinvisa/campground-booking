@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { apiBaseUrl } from "../constants";
-import { Booking, NewBooking } from "@/types";
+import { Booking, Bookings, NewBooking } from "@/types";
 
 let token: string | null = null;
 
@@ -13,8 +13,7 @@ const getAll = async () => {
   const config = {
     headers: { Authorization: token },
   };
-  const { data } = await axios.get<Booking[]>(`${apiBaseUrl}/bookings`, config);
-
+  const { data } = await axios.get<Bookings>(`${apiBaseUrl}/bookings`, config);
   return data;
 };
 
@@ -45,7 +44,11 @@ const update = async (newBooking: NewBooking, id: string) => {
   const config = {
     headers: { Authorization: token },
   };
-  const response = await axios.put(`${apiBaseUrl}/${id}`, newBooking, config);
+  const response = await axios.put(
+    `${apiBaseUrl}/bookings/${id}`,
+    newBooking,
+    config
+  );
   return response.data;
 };
 
@@ -53,7 +56,7 @@ const remove = async (id: string) => {
   const config = {
     headers: { Authorization: token },
   };
-  const response = await axios.delete(`${apiBaseUrl}/${id}`, config);
+  const response = await axios.delete(`${apiBaseUrl}/bookings/${id}`, config);
 
   return response.data;
 };
