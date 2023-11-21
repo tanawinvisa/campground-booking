@@ -44,7 +44,11 @@ const update = async (newBooking: NewBooking, id: string) => {
   const config = {
     headers: { Authorization: token },
   };
-  const response = await axios.put(`${apiBaseUrl}/${id}`, newBooking, config);
+  const response = await axios.put(
+    `${apiBaseUrl}/bookings/${id}`,
+    newBooking,
+    config
+  );
   return response.data;
 };
 
@@ -52,7 +56,7 @@ const remove = async (id: string) => {
   const config = {
     headers: { Authorization: token },
   };
-  const response = await axios.delete(`${apiBaseUrl}/${id}`, config);
+  const response = await axios.delete(`${apiBaseUrl}/bookings/${id}`, config);
 
   return response.data;
 };

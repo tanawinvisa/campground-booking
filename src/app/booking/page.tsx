@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <main>
       <div className="w-screen">
-        <div className="px-12">
+        <div className="lg:px-12">
           <BookingList />
         </div>
       </div>
