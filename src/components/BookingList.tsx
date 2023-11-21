@@ -6,6 +6,8 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import BookingItem from "./BookingItem";
+import Image from "next/image";
+import Loading from "./Loading";
 
 export default function BookingList() {
   const { data: session } = useSession();
@@ -13,10 +15,12 @@ export default function BookingList() {
   const [currentBookingId, setCurrentBookingId] = useState<string | null>(null);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function fetchBookings() {
       if (session?.user) {
+        setIsLoading(true);
         try {
           bookingService.setToken(session.user.token);
           const response = await bookingService.getAll();
@@ -29,6 +33,8 @@ export default function BookingList() {
           setBookings(filteredBookings);
         } catch (error) {
           console.error("Error fetching bookings:", error);
+        } finally {
+          setIsLoading(false);
         }
       }
     }
@@ -103,15 +109,19 @@ export default function BookingList() {
       >
         An error occurred while deleting the booking.
       </Modal>
-      <ul role="list" className="space-y-4 divide-y divide-gray-100">
-        {bookings.map((booking) => (
-          <BookingItem
-            key={booking._id}
-            booking={booking}
-            handleCancelClick={openConfirmModal}
-          />
-        ))}
-      </ul>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <ul role="list" className="space-y-4 divide-y divide-gray-100">
+          {bookings.map((booking) => (
+            <BookingItem
+              key={booking._id}
+              booking={booking}
+              handleCancelClick={openConfirmModal}
+            />
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
