@@ -11,9 +11,9 @@ function Navbar() {
   const navigation = [
     { name: "Home", href: "/", current: pathname === "/" },
     {
-      name: "Campground",
-      href: "/campground",
-      current: pathname === "/campground",
+      name: "Campgrounds",
+      href: "/campgrounds",
+      current: pathname === "/campgrounds",
     },
     { name: "Booking", href: "/booking", current: pathname === "/booking" },
   ];
