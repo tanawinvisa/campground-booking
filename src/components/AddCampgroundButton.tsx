@@ -7,7 +7,7 @@ export default function AddCampgroundButton () {
 
     return (
         <button className="w-[150px] h-[50px] rounded-xl bg-amber-500 py-2 text-white text-base"
-                onClick={()=> router.push("/campground/create")}
+                onClick={()=> router.push("/campgrounds/create")}
         >
                         <AddCircleIcon className='text-white mr-2'/>
                         Create new
