@@ -5,11 +5,13 @@ import { useState, useEffect } from "react";
 import campgroundService from "@/services/campground";
 import { useSession } from "next-auth/react";
 import { Campground } from "@/types";
+import Loading from "./Loading";
 
 export default function CampgroundList() {
   // const mockdata = [{id:'3', name:'Camp3', picture:'/images/camp3.JPG'},{id:'4', name:'Camp4', picture:'/images/camp4.JPG'},{id:'5', name:'Camp5', picture:'/images/camp5.JPG'},{id:'6', name:'Camp6', picture:'/images/camp6.JPG'}]
   const [campgrounds, setCampgrounds] = useState<Campground[]>([]);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -25,11 +27,14 @@ export default function CampgroundList() {
   console.log("list", session);
   useEffect(() => {
     const fetchCampgrounds = async () => {
+      setIsLoading(true);
       try {
         const { data } = await campgroundService.getAll();
         setCampgrounds(data);
       } catch (error) {
         console.log(error, "error");
+      } finally {
+        setIsLoading(false);
       }
       if (session && session.user) {
         campgroundService.setToken(session.user.token);
@@ -66,21 +71,25 @@ export default function CampgroundList() {
 
   return (
     <div>
-      <div className="gap-x-[60px] gap-y-[40px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {campgrounds?.map((item) => (
-          <div key={item.id} className="flex justify-center items-center">
-            <Link href={`/campgrounds/${item.id}`}>
-              <CampgroundCard
-                campName={item.name}
-                imgSrc={item.picture}
-                campId={item.id}
-                isAdmin={isAdmin}
-                handleDelete={handleDelete}
-              />
-            </Link>
-          </div>
-        ))}
-      </div>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className="gap-x-[60px] gap-y-[40px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {campgrounds?.map((item) => (
+            <div key={item.id} className="flex justify-center items-center">
+              <Link href={`/campgrounds/${item.id}`}>
+                <CampgroundCard
+                  campName={item.name}
+                  imgSrc={item.picture}
+                  campId={item.id}
+                  isAdmin={isAdmin}
+                  handleDelete={handleDelete}
+                />
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
