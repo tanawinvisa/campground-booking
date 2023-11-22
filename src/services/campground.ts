@@ -46,7 +46,7 @@ const create = async (campground: NewCampground) => {
   return data;
 };
 
-const update = async (campground: Campground, id: string) => {
+const update = async (campground: NewCampground, id: string) => {
   const config = {
     headers: { Authorization: token },
   };
