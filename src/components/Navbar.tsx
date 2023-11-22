@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import LocalFireDepartmentRoundedIcon from "@mui/icons-material/LocalFireDepartmentRounded";
 import Link from "next/link";
 import SignInButton from "./SignInButton";
+import ThemeToggleButton from "./ThemeToggleButton";
 
 function Navbar() {
   const pathname = usePathname();
@@ -48,7 +49,10 @@ function Navbar() {
             ))}
           </nav>
         </nav>
-        <SignInButton />
+        <div className="flex items-center gap-4">
+          <SignInButton />
+          <ThemeToggleButton />
+        </div>
       </div>
     </div>
   );
