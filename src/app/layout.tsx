@@ -25,7 +25,7 @@ export default async function RootLayout({
       <body className={inter.className}>
         {" "}
         <NextAuthProvider session={nextAuthSession}>
-          <div className="w-screen top-0 sticky drop-shadow-lg bg-white">
+          <div className="w-screen top-0 sticky drop-shadow-lg bg-white z-30">
             <Navbar />
           </div>
           {children}

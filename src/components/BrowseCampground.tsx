@@ -43,7 +43,7 @@ export default function BrowseCampground() {
   }, [campgrounds]);
   return (
     <div>
-      <div className="flex flex-col sm:flex-row justify-between items-center py-4 px-4 sm:px-12">
+      <div className="flex flex-col sm:flex-row justify-between items-center py-4 px-4 sm:px-6">
         <h2 className="text-gray-900 text-xl font-medium">CAMPGROUNDS</h2>
         <Link href="/campgrounds" className="text-amber-500">
           Browse all Campgrounds

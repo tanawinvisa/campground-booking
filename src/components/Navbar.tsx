@@ -23,7 +23,7 @@ function Navbar() {
   }
 
   return (
-    <div className="mx-auto px-2 sm:px-6 lg:px-8 z-1">
+    <div className="mx-auto px-2 sm:px-6 lg:px-8 z-20">
       <div className="relative flex h-16 items-center justify-between">
         <nav className="flex flex-1 h-full items-center justify-center sm:items-stretch sm:justify-start">
           <div className="flex flex-shrink-0 items-center px-2">

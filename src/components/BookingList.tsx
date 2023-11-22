@@ -10,13 +10,13 @@ import Image from "next/image";
 import Loading from "./Loading";
 
 export default function BookingList() {
+  debugger;
   const { data: session } = useSession();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [currentBookingId, setCurrentBookingId] = useState<string | null>(null);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   useEffect(() => {
     async function fetchBookings() {
       if (session?.user) {
