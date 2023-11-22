@@ -40,9 +40,7 @@ export default function CampgroundList() {
       console.log("use effect", session);
     };
     fetchCampgrounds();
-    // console.log('json',campgroundJson)
-  }, []);
-  // console.log('json',campgroundJson)
+  }, [session]);
 
   const handleDelete = async (campId: string) => {
     try {

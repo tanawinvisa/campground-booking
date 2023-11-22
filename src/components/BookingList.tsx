@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import BookingItem from "./BookingItem";
-import Image from "next/image";
 import Loading from "./Loading";
 
 export default function BookingList() {

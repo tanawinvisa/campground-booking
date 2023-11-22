@@ -1,7 +1,6 @@
 "use client";
 
 import { useAllCampgrounds } from "@/hooks/campgroundHook";
-import campgroundService from "@/services/campground";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import InteractiveCard from "./InteractiveCard";

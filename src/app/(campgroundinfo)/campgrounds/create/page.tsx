@@ -22,7 +22,11 @@ export default function CreateCampground({
         className=""
       />
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 sm:p-8 rounded-lg shadow-md z-10">
-        <AddCampgroundForm campId={campId} />
+        {campId ? (
+          <AddCampgroundForm campId={campId} />
+        ) : (
+          "No campground Id specify"
+        )}
       </div>
     </main>
   );
