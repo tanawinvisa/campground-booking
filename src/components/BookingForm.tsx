@@ -79,10 +79,10 @@ export default function BookingForm({
       <form onSubmit={handleSubmit}>
         <div className="space-y-12 ">
           <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
+            <h2 className="text-base font-semibold leading-7 text-gray-900 dark:text-white">
               Book Your Stay
             </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">
+            <p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-300">
               {campground?.name}
             </p>
           </div>
@@ -90,7 +90,7 @@ export default function BookingForm({
             <div className="sm:col-span-6">
               <label
                 htmlFor="bookingDate"
-                className="block text-sm font-medium leading-6 text-gray-900"
+                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
               >
                 Booking Date
               </label>
@@ -100,7 +100,7 @@ export default function BookingForm({
                     type="date"
                     name="bookingDate"
                     id="bookingDate"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 dark:bg-gray-300 rounded-md"
                     value={bookingDate}
                     onChange={(e) => setBookingDate(e.target.value)}
                   />
@@ -109,17 +109,17 @@ export default function BookingForm({
               <div className="sm:col-span-6">
                 <label
                   htmlFor="checkoutDate"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
                 >
                   Checkout Date
                 </label>
                 <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-amber-500  sm:max-w-md">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-amber-500 sm:max-w-md">
                     <input
                       type="date"
                       name="checkoutDate"
                       id="checkoutDate"
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 dark:bg-gray-300 rounded-md"
                       value={checkoutDate}
                       onChange={(e) => setCheckoutDate(e.target.value)}
                     />
@@ -132,7 +132,7 @@ export default function BookingForm({
         <div className="mt-6 flex items-center justify-end gap-x-6">
           <button
             type="button"
-            className="text-sm font-semibold leading-6 text-gray-900"
+            className="text-sm font-semibold leading-6 text-gray-900 dark:text-white"
             onClick={handleCancel}
           >
             Cancel

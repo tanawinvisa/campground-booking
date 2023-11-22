@@ -53,16 +53,24 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
     }
   }, [session]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const newCampground = {
-      name,
-      address,
-      district,
-      province,
-      postalcode,
-      tel,
-      picture,
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const newCampground = { name, address, district, province, postalcode, tel, picture };
+        try {
+           if(session?.user?.role === "admin"){
+            if (!picture.includes("https://drive.google.com/")) {
+                console.error("Invalid link");
+                return;
+            }
+            const campground = await campgroundService.create(newCampground);
+            console.log("Campground created:", campground);
+           }else{
+            console.log("You don't have a permission.");
+           }
+          
+        } catch (error) {
+          console.error("Error creating campground:", error);
+        }
     };
     try {
       if (session?.user?.role === "admin") {
@@ -77,27 +85,27 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
     router.push("/campgrounds");
   };
 
-  const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const newCampground = {
-      name,
-      address,
-      district,
-      province,
-      postalcode,
-      tel,
-      picture,
-    };
-    try {
-      if (campId) {
-        if (session?.user?.role === "admin") {
-          const updatedCampground = await campgroundService.update(
-            newCampground,
-            campId
-          );
-          console.log("Campground updated:", campground);
-        } else {
-          console.log("You don't have a permission.");
+    const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const newCampground = { name, address, district, province, postalcode, tel, picture };
+        try {
+            if (campId) {
+                if(session?.user?.role === "admin"){
+                  if (!picture.includes("https://drive.google.com/")) {
+                console.error("Invalid link");
+                return;
+            }
+                    const updatedCampground = await campgroundService.update(newCampground,campId);
+                    console.log("Campground updated:", campground);
+                   }else{
+                    console.log("You don't have a permission.");
+                   }
+            }else{
+                console.log("Undefine campground id.")
+            }
+        } catch (error) {
+            console.error("Error deleting campground:", error);
+
         }
       } else {
         console.log("Undefine campground id.");
@@ -109,8 +117,8 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
   };
 
   return (
-    <div className="w-full">
-      <h1 className="text-2xl font-bold text-gray-700 mb-2">
+    <div className="w-full dark:bg-[#1a1a2e]">
+      <h1 className="text-2xl font-bold text-gray-700 mb-2 dark:text-white">
         Create Campground
       </h1>
       <form
@@ -121,7 +129,7 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
           <div>
             <label
               htmlFor="name"
-              className="block text-sm font-semibold text-gray-700 mb-1"
+              className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-300"
             >
               Campground Name
             </label>
@@ -135,7 +143,7 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-amber-500 focus:border-amber-500"
+              className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-[#f4f4f4] dark:placeholder-[#9e9e9e]"
             ></input>
           </div>
         </div>
@@ -143,7 +151,7 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
           <div>
             <label
               htmlFor="address"
-              className="block text-sm font-semibold text-gray-700 mb-1"
+              className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-300"
             >
               Address
             </label>
@@ -166,7 +174,7 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
             <div>
               <label
                 htmlFor="district"
-                className="block text-sm font-semibold text-gray-700 mb-1"
+                className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-300"
               >
                 District
               </label>
@@ -188,7 +196,7 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
             <div>
               <label
                 htmlFor="province"
-                className="block text-sm font-semibold text-gray-700 mb-1"
+                className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-300"
               >
                 Province
               </label>
@@ -212,7 +220,7 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
             <div>
               <label
                 htmlFor="postalcode"
-                className="block text-sm font-semibold text-gray-700 mb-1"
+                className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-300"
               >
                 Postal code
               </label>
@@ -234,7 +242,7 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
             <div>
               <label
                 htmlFor="tel"
-                className="block text-sm font-semibold text-gray-700 mb-1"
+                className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-300"
               >
                 Phone number
               </label>
@@ -257,7 +265,7 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
           <div>
             <label
               htmlFor="picture"
-              className="block text-sm font-semibold text-gray-700 mb-1"
+              className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-300"
             >
               Picture URL
             </label>

@@ -16,7 +16,7 @@ export default function InteractiveCard ({children ,contentName}: {children : Re
     }
 
     return (
-        <div className="w-[300px] h-[280px] round-lg shoadow-lg bg-white border-[1px] border-gray-500 relative" 
+        <div className="w-[300px] h-[280px] round-lg shoadow-lg bg-white border-[1px] border-gray-500 relative dark:bg-[#1a1a2e] dar:border-[#303040]" 
         onMouseOver={(e)=>onCardMouseAction(e)}
         onMouseOut={(e)=>onCardMouseAction(e)}
         style={{borderRadius: "10px"}}

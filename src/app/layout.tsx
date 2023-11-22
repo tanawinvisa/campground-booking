@@ -6,6 +6,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import Navbar from "@/components/Navbar";
 
+
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,14 +23,14 @@ export default async function RootLayout({
   const nextAuthSession = await getServerSession(authOptions);
 
   return (
-    <html lang="en">
+    <html lang="en" className="light" style={{colorScheme: 'light'}}>
       <body className={inter.className}>
         {" "}
         <NextAuthProvider session={nextAuthSession}>
-          <div className="w-screen top-0 sticky drop-shadow-lg bg-white z-30">
-            <Navbar />
-          </div>
-          {children}
+            <div className="w-screen top-0 sticky drop-shadow-lg bg-white z-30">
+              <Navbar />
+            </div>
+            {children}
         </NextAuthProvider>
       </body>
     </html>

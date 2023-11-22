@@ -3,16 +3,16 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <div className="bg-stone-100  sm:rounded-3xl overflow-hidden">
+    <div className="bg-stone-100  sm:rounded-3xl overflow-hidden dark:bg-[#1a202c]">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:flex lg:items-center lg:gap-x-20 my-2">
           <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
-            <h2 className="text-3xl font-bold tracking-tight text-black sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-black sm:text-4xl dark:text-white">
               Welcome to
               <br />
-              <span className="text-amber-800">Campground</span>
+              <span className="text-amber-800 dark:text-amber-500">Campground</span>
             </h2>
-            <p className="z-10 mt-6 text-lg leading-8 text-gray-800">
+            <p className="z-10 mt-6 text-lg leading-8 text-gray-800 dark:text-gray-400">
               Our website brings the ease of digital booking to the great
               outdoors, ensuring a seamless user experience from the comfort of
               your screen to the comfort of your tent.

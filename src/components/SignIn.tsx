@@ -56,7 +56,7 @@ export default function SignIn(props: Props) {
             className="mx-auto h-10 w-auto"
             style={{ color: "#f59e0b" }}
           />
-          <h2 className="text-center text-2xl font-bold leading-9  text-gray-900">
+          <h2 className="text-center text-2xl font-bold leading-9  text-gray-900 dark:text-white">
             Sign in to your account
           </h2>
         </div>
@@ -66,7 +66,7 @@ export default function SignIn(props: Props) {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
+                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
               >
                 Email address
               </label>
@@ -88,7 +88,7 @@ export default function SignIn(props: Props) {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
                 >
                   Password
                 </label>
