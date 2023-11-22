@@ -1,16 +1,22 @@
+"use client"
 import CampgroundList from "@/components/CampgroundList";
 import { Suspense } from "react";
 import { LinearProgress } from "@mui/material";
 import campgroundService from "@/services/campground";
 import AddCampgroundButton from "@/components/AddCampgroundButton";
 import Loading from "@/components/Loading";
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 
-export default async function Campgrounds() {
+export default function Campgrounds() {
   const campgrounds = campgroundService.getAll();
 
-  // const session = await getServerSession(authOptions);
-  // if (!session || !session.user.token) return null
-  // const profile = session ? await getUserProfile(session.user.token) : null;
+  const { data: session } = useSession();
+    useEffect(() => {
+        if (session && session.user) {
+            campgroundService.setToken(session.user.token);
+        }
+    }, [session]);
 
   return (
     <main className="p-8 py-16 pb-8">

@@ -1,28 +1,62 @@
 'use client'
-import { revalidateTag } from "next/cache"
-import { redirect } from "next/navigation"
 import { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
 import campgroundService from "@/services/campground"
+import { Campground } from "@/types"
 
 
-export default function AddCampgroundForm (){
+export default function AddCampgroundForm ({campId}: { campId:string }){
     
+    const [name, setName] = useState("");
+    const [address, setAddress] = useState("");
+    const [district, setDistrict] = useState("");
+    const [province, setProvince] = useState("");
+    const [postalcode, setPostalCode] = useState("");
+    const [tel, setTel] = useState("");
+    const [picture, setPicture] = useState("");
+    const [campground, setCampground] = useState(null as null | Campground);
+    const [isUpdating, setIsUpdating] = useState(false);
 
-    const [name, setName] = useState<string>("");
-    const [address, setAddress] = useState<string>("");
-    const [district, setDistrict] = useState<string>("");
-    const [province, setProvince] = useState<string>("");
-    const [postalcode, setPostalCode] = useState<string>("");
-    const [tel, setTel] = useState<string>("");
-    const [picture, setPicture] = useState<string>("");
+    useEffect(()=>{
+        const fetchDetails = async () =>{
+            try {
+                const detail = await campgroundService.get(campId);
+                setCampground(detail.data);
+              } catch (error) {
+                // if (error instanceof AxiosError) {
+                //   setModalMessage(error.response?.data.message);
+                // } else {
+                //   setModalMessage("Error fetching campground:");
+                // }
+              }
+            if(campId){
+                const campgroundDetail = await campgroundService.get(campId);
+                setCampground(campgroundDetail.data);
+                setIsUpdating(true);
+            }
+        };
+        fetchDetails();
+
+    },[campId]);
+
+    useEffect(()=>{
+        if(campground != null){
+            setName(campground.name)
+            setAddress(campground.address)
+            setDistrict(campground.district)
+            setProvince(campground.province)
+            setPostalCode(campground.postalcode)
+            setTel(campground.tel)
+            setPicture(campground.picture)
+        }
+    },[campground]);
 
     
 
     const { data: session } = useSession();
     useEffect(() => {
         if (session && session.user) {
-        campgroundService.setToken(session.user.token);
+            campgroundService.setToken(session.user.token);
         }
     }, [session]);
 
@@ -35,12 +69,24 @@ export default function AddCampgroundForm (){
         } catch (error) {
           console.error("Error creating campground:", error);
         }
-      };
+    };
+
+    const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const newCampground = { name, address, district, province, postalcode, tel, picture };
+        try {
+            if (campId) {
+            const updatedCampground = await campgroundService.update(newCampground,campId);
+            }
+        } catch (error) {
+            console.error("Error deleting campground:", error);
+        }
+        };
 
     return(
         <div>
             <h1>Create Campground</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={isUpdating ? handleUpdate:handleSubmit}>
                 <div>
                     <div>
                         <label htmlFor="name">Campground Name</label>
@@ -148,6 +194,7 @@ export default function AddCampgroundForm (){
                     </div>
                     <div>
                         <input 
+                            className="w-full"
                             type="text" 
                             placeholder="URL" 
                             id="picture" 
@@ -162,7 +209,7 @@ export default function AddCampgroundForm (){
                     <button className="w-[100%] h-[44px] rounded-xl bg-amber-500 py-1 text-white text-base"
                             type="submit"
                     >
-                            Add Campground
+                           { isUpdating ? 'Update': 'Add'}Campground
                     </button>
                 </div>
             </form>
