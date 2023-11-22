@@ -24,7 +24,7 @@ export default function Home({ params }: { params: { bookingId: string } }) {
   }
 
   return (
-    <main className="p-8 py-16 pb-8">
+    <main className="p-8 py-16 pb-8 dark:bg-[#1a1a2e] h-screen">
       <div className="flex justify-center items-center flex-col">
         <div className="w-full sm:w-[60%]">
           {!campgroundId || !bookingDate || !checkoutDate ? (

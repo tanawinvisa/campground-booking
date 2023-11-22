@@ -75,7 +75,7 @@ export default function BookingForm({
   };
 
   return (
-    <div>
+    <div className="dark:bg-[#1a1a2e]">
       <form onSubmit={handleSubmit}>
         <div className="space-y-12 ">
           <div className="border-b border-gray-900/10 pb-12">
