@@ -15,87 +15,86 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
   const [campground, setCampground] = useState(null as null | Campground);
   const [isUpdating, setIsUpdating] = useState(false);
 
-  useEffect(() => {
-    const fetchDetails = async () => {
-      try {
-        const detail = await campgroundService.get(campId);
-        setCampground(detail.data);
-      } catch (error) {
-        // if (error instanceof AxiosError) {
-        //   setModalMessage(error.response?.data.message);
-        // } else {
-        //   setModalMessage("Error fetching campground:");
-        // }
-      }
-      if (campId) {
-        const campgroundDetail = await campgroundService.get(campId);
-        setCampground(campgroundDetail.data);
-        setIsUpdating(true);
-      }
+
+
+    useEffect(()=>{
+        const fetchDetails = async () =>{
+            try {
+                const detail = await campgroundService.get(campId);
+                setCampground(detail.data);
+              } catch (error) {
+                // if (error instanceof AxiosError) {
+                //   setModalMessage(error.response?.data.message);
+                // } else {
+                //   setModalMessage("Error fetching campground:");
+                // }
+              }
+            if(campId){
+                const campgroundDetail = await campgroundService.get(campId);
+                setCampground(campgroundDetail.data);
+                setIsUpdating(true);
+            }
+        };
+        fetchDetails();
+
+    },[campId]);
+
+    useEffect(()=>{
+        if(campground != null){
+            setName(campground.name)
+            setAddress(campground.address)
+            setDistrict(campground.district)
+            setProvince(campground.province)
+            setPostalCode(campground.postalcode)
+            setTel(campground.tel)
+            setPicture(campground.picture)
+        }
+    },[campground]);
+
+    const { data: session } = useSession();
+    useEffect(() => {
+        if (session && session.user) {
+            campgroundService.setToken(session.user.token);
+        }
+    }, [session]);
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const newCampground = { name, address, district, province, postalcode, tel, picture };
+        try {
+           if(session?.user?.role === "admin"){
+            const campground = await campgroundService.create(newCampground);
+            console.log("Campground created:", campground);
+           }else{
+            console.log("You don't have a permission.");
+           }
+          
+        } catch (error) {
+          console.error("Error creating campground:", error);
+        }
     };
-    fetchDetails();
-  }, [campId]);
+ 
 
-  useEffect(() => {
-    if (campground != null) {
-      setName(campground.name);
-      setAddress(campground.address);
-      setDistrict(campground.district);
-      setProvince(campground.province);
-      setPostalCode(campground.postalcode);
-      setTel(campground.tel);
-      setPicture(campground.picture);
-    }
-  }, [campground]);
+    const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const newCampground = { name, address, district, province, postalcode, tel, picture };
+        try {
+            if (campId) {
+                if(session?.user?.role === "admin"){
+                    const updatedCampground = await campgroundService.update(newCampground,campId);
+                    console.log("Campground updated:", campground);
+                   }else{
+                    console.log("You don't have a permission.");
+                   }
+            }else{
+                console.log("Undefine campground id.")
+            }
+        } catch (error) {
+            console.error("Error deleting campground:", error);
+        }
+        };
 
-  const { data: session } = useSession();
-  useEffect(() => {
-    if (session && session.user) {
-      campgroundService.setToken(session.user.token);
-    }
-  }, [session]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const newCampground = {
-      name,
-      address,
-      district,
-      province,
-      postalcode,
-      tel,
-      picture,
-    };
-    try {
-      const campground = await campgroundService.create(newCampground);
-      console.log("Campground created:", campground);
-    } catch (error) {
-      console.error("Error creating campground:", error);
-    }
-  };
-
-  const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const newCampground = {
-      name,
-      address,
-      district,
-      province,
-      postalcode,
-      tel,
-      picture,
-    };
-    try {
-      if (campId) {
-        const updatedCampground = await campgroundService.update(
-          newCampground,
-          campId
-        );
-      }
-    } catch (error) {
-      console.error("Error deleting campground:", error);
-    }
-  };
 
   return (
     <div className="w-full">

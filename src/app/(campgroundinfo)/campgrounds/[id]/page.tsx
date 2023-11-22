@@ -1,6 +1,7 @@
 import campgroundService from "@/services/campground"
 import Image from "next/image"
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Link from "next/link";
 
 
 
@@ -30,10 +31,14 @@ export default async function CampgroundDetailPage ({params} : {params : {id: st
                             {campgroundDetail.data.province}{` `} {campgroundDetail.data.postalcode}<br/>
                             {campgroundDetail.data.tel}
                         </p>
-                        <button className="w-[150px] h-[50px] rounded-xl bg-amber-500 py-2 text-white text-base">
+                        <Link className="w-[150px] h-[50px] rounded-xl bg-amber-500 py-2 text-white text-base"
+                            href={{
+                                pathname: `/campgrounds/${params.id}/booking`,
+                            }}
+                        >
                         <AddCircleIcon className='text-white mr-2'/>
                             Reserve now
-                         </button>
+                         </Link>
                     </div>
 
                 </div>

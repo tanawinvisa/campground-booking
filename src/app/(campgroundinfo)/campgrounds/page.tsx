@@ -5,25 +5,18 @@ import { LinearProgress } from "@mui/material";
 import campgroundService from "@/services/campground";
 import AddCampgroundButton from "@/components/AddCampgroundButton";
 import Loading from "@/components/Loading";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { Campground } from "@/types";
 
 export default function Campgrounds() {
-  const campgrounds = campgroundService.getAll();
-
-  const { data: session } = useSession();
-    useEffect(() => {
-        if (session && session.user) {
-            campgroundService.setToken(session.user.token);
-        }
-    }, [session]);
-
+    // const campgrounds = campgroundService.getAll();
   return (
     <main className="p-8 py-16 pb-8">
       <div className="flex justify-center items-center flex-col">
         <div className="w-full">
           <Suspense fallback={<Loading />}>
-            <CampgroundList campJson={campgrounds} />
+            <CampgroundList />
           </Suspense>
         </div>
         <div className="w-full flex justify-center items-center mt-5">

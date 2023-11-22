@@ -1,6 +1,7 @@
 import BookingForm from "@/components/BookingForm";
 
 export default async function Home({ params }: { params: { id: string } }) {
+
   return (
     <main className="p-8 py-16 pb-8">
       <div className="flex justify-center items-center flex-col">
