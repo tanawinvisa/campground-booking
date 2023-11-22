@@ -1,5 +1,5 @@
 import campgroundService from "@/services/campground";
-import { Campground, Campgrounds } from "@/types";
+import { Campground } from "@/types";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 

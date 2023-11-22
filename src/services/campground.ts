@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { apiBaseUrl } from "../constants";
-import { Campground, Campgrounds } from "@/types";
+import { Campground, Campgrounds, NewCampground } from "@/types";
 
 let token: string | null = null;
 
@@ -34,7 +34,7 @@ const remove = async (id: string) => {
   return response.data;
 };
 
-const create = async (campground: Campground) => {
+const create = async (campground: NewCampground) => {
   const config = {
     headers: { Authorization: token },
   };
@@ -46,7 +46,7 @@ const create = async (campground: Campground) => {
   return data;
 };
 
-const update = async (campground: Campground, id: string) => {
+const update = async (campground: NewCampground, id: string) => {
   const config = {
     headers: { Authorization: token },
   };

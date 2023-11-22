@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import campgroundService from "@/services/campground";
 import { Campground } from "@/types";
+import { useRouter } from "next/navigation";
 
 export default function AddCampgroundForm({ campId }: { campId: string }) {
   const [name, setName] = useState("");
@@ -14,49 +15,43 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
   const [picture, setPicture] = useState("");
   const [campground, setCampground] = useState(null as null | Campground);
   const [isUpdating, setIsUpdating] = useState(false);
+  const router = useRouter();
 
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const detail = await campgroundService.get(campId);
+        setCampground(detail.data);
+      } catch (error) {
+        console.log(error);
+      }
+      if (campId) {
+        const campgroundDetail = await campgroundService.get(campId);
+        setCampground(campgroundDetail.data);
+        setIsUpdating(true);
+      }
+    };
+    fetchDetails();
+  }, [campId]);
 
+  useEffect(() => {
+    if (campground != null) {
+      setName(campground.name);
+      setAddress(campground.address);
+      setDistrict(campground.district);
+      setProvince(campground.province);
+      setPostalCode(campground.postalcode);
+      setTel(campground.tel);
+      setPicture(campground.picture);
+    }
+  }, [campground]);
 
-    useEffect(()=>{
-        const fetchDetails = async () =>{
-            try {
-                const detail = await campgroundService.get(campId);
-                setCampground(detail.data);
-              } catch (error) {
-                // if (error instanceof AxiosError) {
-                //   setModalMessage(error.response?.data.message);
-                // } else {
-                //   setModalMessage("Error fetching campground:");
-                // }
-              }
-            if(campId){
-                const campgroundDetail = await campgroundService.get(campId);
-                setCampground(campgroundDetail.data);
-                setIsUpdating(true);
-            }
-        };
-        fetchDetails();
-
-    },[campId]);
-
-    useEffect(()=>{
-        if(campground != null){
-            setName(campground.name)
-            setAddress(campground.address)
-            setDistrict(campground.district)
-            setProvince(campground.province)
-            setPostalCode(campground.postalcode)
-            setTel(campground.tel)
-            setPicture(campground.picture)
-        }
-    },[campground]);
-
-    const { data: session } = useSession();
-    useEffect(() => {
-        if (session && session.user) {
-            campgroundService.setToken(session.user.token);
-        }
-    }, [session]);
+  const { data: session } = useSession();
+  useEffect(() => {
+    if (session && session.user) {
+      campgroundService.setToken(session.user.token);
+    }
+  }, [session]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -77,7 +72,18 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
           console.error("Error creating campground:", error);
         }
     };
- 
+    try {
+      if (session?.user?.role === "admin") {
+        const campground = await campgroundService.create(newCampground);
+        console.log("Campground created:", campground);
+      } else {
+        console.log("You don't have a permission.");
+      }
+    } catch (error) {
+      console.error("Error creating campground:", error);
+    }
+    router.push("/campgrounds");
+  };
 
     const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -99,10 +105,16 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
             }
         } catch (error) {
             console.error("Error deleting campground:", error);
+
         }
-        };
-
-
+      } else {
+        console.log("Undefine campground id.");
+      }
+    } catch (error) {
+      console.error("Error deleting campground:", error);
+    }
+    router.push("/campgrounds");
+  };
 
   return (
     <div className="w-full dark:bg-[#1a1a2e]">

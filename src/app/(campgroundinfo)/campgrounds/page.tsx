@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import CampgroundList from "@/components/CampgroundList";
 import { Suspense } from "react";
 import AddCampgroundButton from "@/components/AddCampgroundButton";
@@ -18,6 +18,7 @@ export default function Campgrounds() {
             setIsAdmin(true)
         }
     }, [session]);
+
   return (
     <main className="p-8 py-16 pb-8 h-full dark:bg-[#1a1a2e]">
       <div className="flex justify-center items-center flex-col">
@@ -28,6 +29,7 @@ export default function Campgrounds() {
         </div>
         <div className="w-full flex justify-center items-center mt-10">
           {isAdmin ? <AddCampgroundButton />:null}
+
         </div>
       </div>
     </main>
