@@ -47,7 +47,7 @@ export default function CampgroundList( ) {
     // console.log('json',campgroundJson)
 
     return (
-        <div>
+        <div className="min-h-screen">
             <div className='gap-x-[60px] gap-y-[40px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
                 {campgroundJson?.data.map((item: Object) => (
                     <div key={item.id} className="flex justify-center items-center">

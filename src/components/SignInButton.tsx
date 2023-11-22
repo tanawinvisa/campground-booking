@@ -10,14 +10,14 @@ const SignInButton = () => {
       {!session ? (
         <Link
           href={"/auth/signin"}
-          className="text-gray-900 hover:text-gray-500 text-sm font-medium"
+          className="text-gray-900 hover:text-gray-500 text-sm font-medium dark:text-gray-400 dark:hover:text-gray-300"
         >
           Sign In
         </Link>
       ) : (
         <Link
           href={"/api/auth/signout"}
-          className="text-gray-900 hover:text-gray-500 text-sm font-medium"
+          className="text-gray-900 hover:text-gray-500 text-sm font-medium dark:text-gray-400 dark:hover:text-gray-300"
         >
           Sign Out
         </Link>

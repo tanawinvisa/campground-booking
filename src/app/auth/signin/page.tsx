@@ -6,7 +6,7 @@ type Props = {
 
 export default function Home(props: Props) {
   return (
-    <div className="h-screen">
+    <div className="h-screen dark:bg-[#1a1a2e]">
       <SignIn
         error={props.searchParams?.error}
         callbackUrl={props.searchParams?.callbackUrl}

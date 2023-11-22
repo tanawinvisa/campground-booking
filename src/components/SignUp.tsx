@@ -62,7 +62,7 @@ export default function SignUp() {
     }
   };
   return (
-    <div className="h-full">
+    <div className="h-full dark:bg-[#1a1a2e]">
       <Modal isOpen={isModalOpen} closeModal={closeModal} title="Signup Status">
         <p>{modalMessage}</p>
         <button
@@ -76,14 +76,14 @@ export default function SignUp() {
           {success ? "Continue" : "Close"}
         </button>
       </Modal>
-      <div className="grid grid-cols-3 h-full items-center ">
-        <div className="flex flex-col items-center px-5 justify-center h-full bg-white col-span-3 lg:col-span-2">
+      <div className="grid grid-cols-3 h-full items-center dark:bg-[#1a1a2e]">
+        <div className="flex flex-col items-center px-5 justify-center h-full bg-white col-span-3 lg:col-span-2 dark:bg-[#1a1a2e]">
           <div className="flex flex-col gap-5">
             <div>
-              <h2 className="text-2xl font-bold leading-9  text-gray-900">
+              <h2 className="text-2xl font-bold leading-9  text-gray-900 dark:text-white">
                 New Here? Sign up now!
               </h2>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 Already has an account?{" "}
                 <a
                   href="/auth/signin"
@@ -94,7 +94,7 @@ export default function SignUp() {
               </p>
             </div>
             <form onSubmit={onSubmit} className="grid grid-cols-2 gap-5 ">
-              <div className="flex flex-col gap-2 col-span-2">
+              <div className="flex flex-col gap-2 col-span-2 dark:text-white">
                 <label htmlFor="email">Email</label>
                 <input
                   id="email"
@@ -106,7 +106,7 @@ export default function SignUp() {
                 ></input>
               </div>
               <div className="flex flex-col gap-2 col-span-2">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password" className="dark:text-white">Password</label>
                 <input
                   id="password"
                   type="password"
@@ -119,7 +119,7 @@ export default function SignUp() {
                 ></input>
               </div>
               <div className="flex flex-col gap-2 col-span-2">
-                <label htmlFor="password2">Type Password Again</label>
+                <label htmlFor="password2" className="dark:text-white">Confirm your password</label>
                 <input
                   id="password2"
                   type="password"
@@ -135,7 +135,7 @@ export default function SignUp() {
                 )}
               </div>
               <div className="flex flex-col gap-2">
-                <label htmlFor="firstName">Name</label>
+                <label htmlFor="firstName" className="dark:text-white">Name</label>
                 <input
                   id="name"
                   type="text"
@@ -146,7 +146,7 @@ export default function SignUp() {
                 ></input>
               </div>
               <div className="flex flex-col gap-2">
-                <label htmlFor="tel">Tel</label>
+                <label htmlFor="tel" className="dark:text-white">Tel</label>
                 <input
                   id="tel"
                   type="tel"

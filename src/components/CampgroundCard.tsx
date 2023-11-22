@@ -66,7 +66,7 @@ export default function CampgroundCard({campName, imgSrc, campId, isAdmin}: {cam
                 </div> : null
                 }
                 <div className='h-[80px] w-full flex justify-center items-center'>
-                    <p className='text-xl'>{campName}</p>
+                    <p className='text-xl dark:text-white'>{campName}</p>
                 </div>
             </div>
         </InteractiveCard>

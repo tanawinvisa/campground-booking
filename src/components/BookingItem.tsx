@@ -27,36 +27,36 @@ export default function BookingItem({ booking, handleCancelClick }: Props) {
       <div className="flex flex-col sm:flex-row items-start justify-between space-y-4 sm:space-y-0 sm:space-x-4">
         <div className="flex items-start space-x-4">
           <FireplaceIcon className="h-5 w-5 text-amber-500" />
-          <div>
-            <h2 className="font-semibold text-lg text-gray-900">
+          <div className="">
+            <h2 className="font-semibold text-lg text-gray-900 dark:text-white">
               {booking.campground.name}
             </h2>
-            <p className="flex items-center  text-gray-500">
-              <LocationOnIcon className="h-5 w-5 mr-1 text-gray-500" />
+            <p className="flex items-center  text-gray-500 dark:text-gray-200">
+              <LocationOnIcon className="h-5 w-5 mr-1 text-gray-500 dark:text-gray-200" />
               {booking.campground.address}
             </p>
-            <p className="flex items-center text-gray-500">
-              <LocalPhoneIcon className="h-5 w-5 mr-1 text-gray-500" />
+            <p className="flex items-center text-gray-500 dark:text-gray-200">
+              <LocalPhoneIcon className="h-5 w-5 mr-1 text-gray-500 dark:text-gray-200" />
               {booking.campground.tel}
             </p>
             {session && session.user.role === "admin" && (
-              <p className="flex items-center text-gray-500">
-                <PersonIcon className="h-5 w-5 mr-1 text-gray-500" />
+              <p className="flex items-center text-gray-500 dark:text-gray-200">
+                <PersonIcon className="h-5 w-5 mr-1 text-gray-500 dark:text-gray-200" />
                 {booking.user.name}
               </p>
             )}
           </div>
         </div>
         <div className="flex flex-col items-start sm:items-end space-y-2">
-          <p className="text-gray-900">
+          <p className="text-gray-900 dark:text-white">
             Booking: {formatDate(booking.bookingDate)}
           </p>
-          <p className="text-gray-900">
+          <p className="text-gray-900 dark:text-white">
             Checkout: {formatDate(booking.checkoutDate)}
           </p>
           <div className="flex gap-2">
             <Link
-              className=" text-gray-900  focus:outline-none focus:shadow-outline"
+              className=" text-gray-900  focus:outline-none focus:shadow-outline dark:text-white"
               href={{
                 pathname: `/booking/${booking._id}`,
                 query: {

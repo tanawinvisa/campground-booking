@@ -63,6 +63,10 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
         const newCampground = { name, address, district, province, postalcode, tel, picture };
         try {
            if(session?.user?.role === "admin"){
+            if (!picture.includes("https://drive.google.com/")) {
+                console.error("Invalid link");
+                return;
+            }
             const campground = await campgroundService.create(newCampground);
             console.log("Campground created:", campground);
            }else{
@@ -81,6 +85,10 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
         try {
             if (campId) {
                 if(session?.user?.role === "admin"){
+                  if (!picture.includes("https://drive.google.com/")) {
+                console.error("Invalid link");
+                return;
+            }
                     const updatedCampground = await campgroundService.update(newCampground,campId);
                     console.log("Campground updated:", campground);
                    }else{
@@ -97,8 +105,8 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
 
 
   return (
-    <div className="w-full">
-      <h1 className="text-2xl font-bold text-gray-700 mb-2">
+    <div className="w-full dark:bg-[#1a1a2e]">
+      <h1 className="text-2xl font-bold text-gray-700 mb-2 dark:text-white">
         Create Campground
       </h1>
       <form
@@ -109,7 +117,7 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
           <div>
             <label
               htmlFor="name"
-              className="block text-sm font-semibold text-gray-700 mb-1"
+              className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-300"
             >
               Campground Name
             </label>
@@ -123,7 +131,7 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-amber-500 focus:border-amber-500"
+              className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-[#f4f4f4] dark:placeholder-[#9e9e9e]"
             ></input>
           </div>
         </div>
@@ -131,7 +139,7 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
           <div>
             <label
               htmlFor="address"
-              className="block text-sm font-semibold text-gray-700 mb-1"
+              className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-300"
             >
               Address
             </label>
@@ -154,7 +162,7 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
             <div>
               <label
                 htmlFor="district"
-                className="block text-sm font-semibold text-gray-700 mb-1"
+                className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-300"
               >
                 District
               </label>
@@ -176,7 +184,7 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
             <div>
               <label
                 htmlFor="province"
-                className="block text-sm font-semibold text-gray-700 mb-1"
+                className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-300"
               >
                 Province
               </label>
@@ -200,7 +208,7 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
             <div>
               <label
                 htmlFor="postalcode"
-                className="block text-sm font-semibold text-gray-700 mb-1"
+                className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-300"
               >
                 Postal code
               </label>
@@ -222,7 +230,7 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
             <div>
               <label
                 htmlFor="tel"
-                className="block text-sm font-semibold text-gray-700 mb-1"
+                className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-300"
               >
                 Phone number
               </label>
@@ -245,7 +253,7 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
           <div>
             <label
               htmlFor="picture"
-              className="block text-sm font-semibold text-gray-700 mb-1"
+              className="block text-sm font-semibold text-gray-700 mb-1 dark:text-gray-300"
             >
               Picture URL
             </label>

@@ -5,44 +5,48 @@ import Link from "next/link";
 
 
 
-export default async function CampgroundDetailPage ({params} : {params : {id: string}}) {
-    const campgroundDetail = await campgroundService.get(params.id)
+export default async function CampgroundDetailPage({ params }: { params: { id: string } }) {
+    const campgroundDetail = await campgroundService.get(params.id);
 
-    console.log(campgroundDetail)
-    return(
-        <main className="flex flex-row px-24 w-screen mt-24">
-            <div className="flex flex-col w-full justify-center">
-                <h1 className="font-mediem text-2xl">{campgroundDetail.data.name}</h1>
+    console.log(campgroundDetail);
+
+    return (
+        <main className="flex flex-row px-24 w-screen h-screen dark:bg-[#1a1a2e]">
+            <div className="flex flex-col w-full mt-24">
+                <h1 className="font-medium text-2xl dark:text-white">{campgroundDetail.data.name}</h1>
                 <div className="flex flex-row w-full mt-4">
                     <div className="w-[50%] inline-block">
-                        <Image 
+                        <Image
                             src={campgroundDetail.data.picture}
-                            alt="Campground Pictue"
-                            // layout="fill"
-                            objectFit="cover"
-                            objectPosition="center"
+                            alt="Campground Picture"
                             width={420}
                             height={420}
+                            objectFit="cover"
+                            objectPosition="center"
                         />
                     </div>
-                    <div className="flex flex-col w-[50%] justify-between">
-                        <p>
-                            {campgroundDetail.data.address }{` `}{campgroundDetail.data.district}{` `}
-                            {campgroundDetail.data.province}{` `} {campgroundDetail.data.postalcode}<br/>
-                            {campgroundDetail.data.tel}
+                    <div className="flex flex-col w-[50%] justify-between pl-8">
+                        <p className="text-gray-500 mb-4 dark:text-gray-200">
+                            <span className="font-medium">
+                                {campgroundDetail.data.address} {campgroundDetail.data.district}{' '}
+                                {campgroundDetail.data.province} {campgroundDetail.data.postalcode}
+                            </span>
+                            <br />
+                            Tel: {campgroundDetail.data.tel}
                         </p>
-                        <Link className="w-[150px] h-[50px] rounded-xl bg-amber-500 py-2 text-white text-base"
+                        <Link
                             href={{
                                 pathname: `/campgrounds/${params.id}/booking`,
                             }}
                         >
-                        <AddCircleIcon className='text-white mr-2'/>
-                            Reserve now
-                         </Link>
+                            <p className="inline-flex items-center w-[150px] h-[50px] rounded-xl bg-amber-500 py-2 text-white text-base hover:bg-yellow-500 focus:outline-none focus:ring focus:border-yellow-300 flex justify-center items-center">
+                                <AddCircleIcon className="text-white mr-2" />
+                                Reserve now
+                            </p>
+                        </Link>
                     </div>
-
                 </div>
             </div>
         </main>
-    )
+    );
 }

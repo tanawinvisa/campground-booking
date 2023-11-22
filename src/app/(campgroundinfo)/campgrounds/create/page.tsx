@@ -3,6 +3,7 @@ import AddCampgroundForm from "@/components/AddCampgroundForm";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 
+
 export default function CreateCampground({
   params,
 }: {
@@ -21,7 +22,7 @@ export default function CreateCampground({
         objectPosition="center"
         className=""
       />
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 sm:p-8 rounded-lg shadow-md z-10">
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 sm:p-8 rounded-lg shadow-md z-10 bg-[#1a1a2e]">
         <AddCampgroundForm campId={campId} />
       </div>
     </main>

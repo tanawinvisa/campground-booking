@@ -23,7 +23,7 @@ function Navbar() {
   }
 
   return (
-    <div className="mx-auto px-2 sm:px-6 lg:px-8 z-20">
+    <div className="mx-auto px-2 sm:px-6 lg:px-8 z-20 bg-white dark:bg-[#1a1a2e]">
       <div className="relative flex h-16 items-center justify-between">
         <nav className="flex flex-1 h-full items-center justify-center sm:items-stretch sm:justify-start">
           <div className="flex flex-shrink-0 items-center px-2">
@@ -37,8 +37,8 @@ function Navbar() {
                 href={item.href}
                 className={classNames(
                   item.current
-                    ? "text-gray-900 border-b-2 border-amber-500"
-                    : "text-gray-400 hover:text-gray-500 hover:border-b-2 hover:border-gray-300",
+                    ? "text-gray-900 border-b-2 border-amber-500 dark:text-white"
+                    : "text-gray-400 hover:text-gray-500 hover:border-b-2 dark:hover:text-gray-300",
                   "flex items-center justify-center text-sm font-medium h-full"
                 )}
                 aria-current={item.current ? "page" : undefined}
