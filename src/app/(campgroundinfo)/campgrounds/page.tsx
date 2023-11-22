@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import CampgroundList from "@/components/CampgroundList";
 import { Suspense } from "react";
 import { LinearProgress } from "@mui/material";
@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 import { Campground } from "@/types";
 
 export default function Campgrounds() {
-    // const campgrounds = campgroundService.getAll();
+  const { data: session } = useSession();
   return (
     <main className="p-8 py-16 pb-8">
       <div className="flex justify-center items-center flex-col">
@@ -20,7 +20,7 @@ export default function Campgrounds() {
           </Suspense>
         </div>
         <div className="w-full flex justify-center items-center mt-5">
-          <AddCampgroundButton />
+          {session?.user.role === "admin" && <AddCampgroundButton />}
         </div>
       </div>
     </main>

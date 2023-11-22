@@ -35,6 +35,8 @@ export interface Campground {
   picture: string;
 }
 
+export type NewCampground = Omit<Campground, "id">;
+
 export interface Campgrounds {
   success: boolean;
   count: number;
