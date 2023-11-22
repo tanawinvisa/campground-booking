@@ -98,7 +98,7 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <h1 className="text-2xl font-bold text-gray-700 mb-2">
         Create Campground
       </h1>
