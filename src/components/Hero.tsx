@@ -10,7 +10,9 @@ export default function Hero() {
             <h2 className="text-3xl font-bold tracking-tight text-black sm:text-4xl dark:text-white">
               Welcome to
               <br />
-              <span className="text-amber-800 dark:text-amber-500">Campground</span>
+              <span className="text-amber-800 dark:text-amber-500">
+                Campground
+              </span>
             </h2>
             <p className="z-10 mt-6 text-lg leading-8 text-gray-800 dark:text-gray-400">
               Our website brings the ease of digital booking to the great
@@ -19,7 +21,7 @@ export default function Hero() {
             </p>
             <div className="mt-10 flex justify-center gap-x-6 lg:justify-start">
               <Link
-                href="#"
+                href="/campgrounds"
                 className="z-10 rounded-md bg-amber-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-white"
               >
                 Get started
