@@ -124,7 +124,7 @@ export default function AddCampgroundForm({
   };
 
   return (
-    <div className="w-full dark:bg-[#1a1a2e]">
+    <div className="w-full bg-white dark:bg-[#1a1a2e] rounded-xl p-4">
       <h1 className="text-2xl font-bold text-gray-700 mb-2 dark:text-white">
         {isUpdating ? "Update " : "Create "}Campground
       </h1>
