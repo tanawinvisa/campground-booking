@@ -8,16 +8,14 @@ import campgroundService from "@/services/campground";
 import { useSession } from "next-auth/react";
 
 export default function Campgrounds() {
-    // const campgrounds = campgroundService.getAll();
-    const [isAdmin, setIsAdmin] = useState(false);
+  // const campgrounds = campgroundService.getAll();
 
   const { data: session } = useSession();
-    useEffect(() => {
-        if (session && session.user) {
-            campgroundService.setToken(session.user.token);
-            setIsAdmin(true)
-        }
-    }, [session]);
+  useEffect(() => {
+    if (session && session.user) {
+      campgroundService.setToken(session.user.token);
+    }
+  }, [session]);
 
   return (
     <main className="p-8 py-16 pb-8 h-full dark:bg-[#1a1a2e]">
@@ -28,8 +26,7 @@ export default function Campgrounds() {
           </Suspense>
         </div>
         <div className="w-full flex justify-center items-center mt-10">
-          {isAdmin ? <AddCampgroundButton />:null}
-
+          {session?.user.role === "admin" ? <AddCampgroundButton /> : null}
         </div>
       </div>
     </main>
