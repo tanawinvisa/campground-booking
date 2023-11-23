@@ -5,7 +5,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Link from "next/link";
 
-
 export default function CampgroundCard({
   campName,
   imgSrc,
@@ -40,7 +39,7 @@ export default function CampgroundCard({
                 },
               }}
             >
-              <EditIcon className="text-gray-500 mr-2 text-xl transition-transform duration-300 transform hover:scale-150" />
+              <EditIcon className="text-gray-500 mr-2 text-xl transition-transform duration-300 transform hover:animate-bounce" />
             </Link>
             <div
               onClick={(e) => {
@@ -49,7 +48,7 @@ export default function CampgroundCard({
                 handleDelete(campId);
               }}
             >
-              <DeleteIcon className="text-red-500 text-xl transition-transform duration-300 transform hover:scale-150" />
+              <DeleteIcon className="text-red-500 text-xl transition-transform duration-300 transform hover:animate-shake" />
             </div>
           </div>
         ) : null}

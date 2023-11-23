@@ -1,7 +1,6 @@
-'use client'
+"use client";
 import BrowseCampground from "@/components/BrowseCampground";
 import Hero from "@/components/Hero";
-
 
 export default function Home() {
   return (
