@@ -19,7 +19,7 @@ export default function CampgroundCard({
   handleDelete: Function;
 }) {
   return (
-    <InteractiveCard contentName="Khaoyai">
+    <InteractiveCard>
       <div className="">
         <div className="w-full h-[200px] relative">
           <Image

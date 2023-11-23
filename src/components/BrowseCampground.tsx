@@ -43,16 +43,18 @@ export default function BrowseCampground() {
   return (
     <div className="">
       <div className="flex flex-col sm:flex-row justify-between items-center py-4 px-4 sm:px-6 dark:bg-[#1a1a2e]">
-        <h2 className="text-gray-900 text-xl font-medium dark:text-gray-200">CAMPGROUNDS</h2>
+        <h2 className="text-gray-900 text-xl font-medium dark:text-gray-200">
+          CAMPGROUNDS
+        </h2>
         <Link href="/campgrounds" className="text-amber-500">
           Browse all Campgrounds
         </Link>
       </div>
-      <div className="flex justify-around overflow-hidden flex-none gap-3 dark:bg-[#1a1a2e] pb-5">
+      <div className="flex justify-around flex-none gap-3 dark:bg-[#1a1a2e] pb-5">
         {displayedCampgrounds &&
           displayedCampgrounds.map((campground) => (
             <Link key={campground.id} href={`/campgrounds/${campground.id}`}>
-              <InteractiveCard contentName="Khaoyai">
+              <InteractiveCard>
                 <div className="">
                   <div className="w-full h-[200px] relative">
                     <Image
@@ -63,7 +65,9 @@ export default function BrowseCampground() {
                     />
                   </div>
                   <div className="h-[80px] w-full flex justify-center items-center">
-                    <p className="text-xl dark:text-gray-300">{campground.name}</p>
+                    <p className="text-xl dark:text-gray-300">
+                      {campground.name}
+                    </p>
                   </div>
                 </div>
               </InteractiveCard>
