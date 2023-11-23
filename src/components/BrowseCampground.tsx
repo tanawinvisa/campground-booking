@@ -50,7 +50,7 @@ export default function BrowseCampground() {
           Browse all Campgrounds
         </Link>
       </div>
-      <div className="flex justify-around flex-none gap-3 dark:bg-[#1a1a2e] pb-5">
+      <div className="flex justify-around flex-1 overflow-hidden gap-3 dark:bg-[#1a1a2e] pb-5">
         {displayedCampgrounds &&
           displayedCampgrounds.map((campground) => (
             <Link key={campground.id} href={`/campgrounds/${campground.id}`}>
