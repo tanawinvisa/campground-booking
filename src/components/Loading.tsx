@@ -3,7 +3,7 @@ import { LinearProgress } from "@mui/material";
 
 export default function Loading() {
   return (
-    <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
+    <div className="flex flex-col items-center justify-center h-[60vh] gap-4 animate-pulse">
       <Image
         src={"/images/loading.svg"}
         alt="loading"
