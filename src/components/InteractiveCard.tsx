@@ -1,27 +1,19 @@
-'use client'
-export default function InteractiveCard ({children ,contentName}: {children : React.ReactNode, contentName:string}) {
+import React from "react";
 
-    function onCardMouseAction(event: React.SyntheticEvent){
-        if(event.type == 'mouseover'){
-            event.currentTarget.classList.remove('shadow-lg')
-            event.currentTarget.classList.add('shadow-2xl')
-            event.currentTarget.classList.remove('bg-white')
-            event.currentTarget.classList.add('bg-neutral-200')
-        }else{
-            event.currentTarget.classList.remove('shadow-2xl')
-            event.currentTarget.classList.add('shaodw-lg')
-            event.currentTarget.classList.remove('bg-neutral-200')
-            event.currentTarget.classList.add('bg-white')
-        }
-    }
-
-    return (
-        <div className="w-[300px] h-[280px] round-lg shoadow-lg bg-white border-[1px] border-gray-500 relative dark:bg-[#1a1a2e] dar:border-[#303040]" 
-        onMouseOver={(e)=>onCardMouseAction(e)}
-        onMouseOut={(e)=>onCardMouseAction(e)}
-        style={{borderRadius: "10px"}}
-        >
-            {children}
-        </div>
-    );
+export default function InteractiveCard({
+  children,
+  contentName,
+}: {
+  children: React.ReactNode;
+  contentName: string;
+}) {
+  return (
+    <div
+      className="relative w-[300px] h-[280px] rounded-lg shadow-lg bg-white border-[1px] border-gray-500 dark:bg-[#1a1a2e] dark:border-[#303040] 
+                    hover:shadow-2xl hover:bg-neutral-200 hover:scale-105 transition-all duration-300 ease-in-out"
+      style={{ borderRadius: "10px" }}
+    >
+      {children}
+    </div>
+  );
 }
