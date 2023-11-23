@@ -9,7 +9,6 @@ import BookingItem from "./BookingItem";
 import Loading from "./Loading";
 
 export default function BookingList() {
-  debugger;
   const { data: session } = useSession();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [currentBookingId, setCurrentBookingId] = useState<string | null>(null);
