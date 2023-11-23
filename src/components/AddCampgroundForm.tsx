@@ -5,7 +5,11 @@ import campgroundService from "@/services/campground";
 import { Campground } from "@/types";
 import { useRouter } from "next/navigation";
 
-export default function AddCampgroundForm({ campId }: { campId: string }) {
+export default function AddCampgroundForm({
+  campId,
+}: {
+  campId: string | null;
+}) {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [district, setDistrict] = useState("");
@@ -20,8 +24,11 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const detail = await campgroundService.get(campId);
-        setCampground(detail.data);
+        if (campId) {
+          const detail = await campgroundService.get(campId);
+          setCampground(detail.data);
+        }
+        console.log("No campId specify");
       } catch (error) {
         console.log(error);
       }
@@ -64,22 +71,22 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
       tel,
       picture,
     };
-  try {
-    if (session?.user?.role === "admin") {
-      if (!picture.includes("https://drive.google.com/")) {
-        console.error("Invalid link");
-        return;
+    try {
+      if (session?.user?.role === "admin") {
+        if (!picture.includes("https://drive.google.com/")) {
+          console.error("Invalid link");
+          return;
+        }
+        const campground = await campgroundService.create(newCampground);
+        console.log("Campground created:", campground);
+      } else {
+        console.log("You don't have a permission.");
+      }
+    } catch (error) {
+      console.error("Error creating campground:", error);
     }
-      const campground = await campgroundService.create(newCampground);
-      console.log("Campground created:", campground);
-    } else {
-      console.log("You don't have a permission.");
-    }
-  } catch (error) {
-    console.error("Error creating campground:", error);
-  }
-  router.push("/campgrounds");
-};
+    router.push("/campgrounds");
+  };
 
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -94,16 +101,19 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
     };
     try {
       if (campId) {
-      if(session?.user?.role === "admin"){
-        if (!picture.includes("https://drive.google.com/")) {
-          console.error("Invalid link");
-          return;
-      }
-      const updatedCampground = await campgroundService.update(newCampground,campId);
-      console.log("Campground updated:", campground);
-      }else{
-      console.log("You don't have a permission.");
-      }
+        if (session?.user?.role === "admin") {
+          if (!picture.includes("https://drive.google.com/")) {
+            console.error("Invalid link");
+            return;
+          }
+          const updatedCampground = await campgroundService.update(
+            newCampground,
+            campId
+          );
+          console.log("Campground updated:", campground);
+        } else {
+          console.log("You don't have a permission.");
+        }
       } else {
         console.log("Undefine campground id.");
       }
@@ -116,7 +126,7 @@ export default function AddCampgroundForm({ campId }: { campId: string }) {
   return (
     <div className="w-full dark:bg-[#1a1a2e]">
       <h1 className="text-2xl font-bold text-gray-700 mb-2 dark:text-white">
-        {isUpdating ? "Update ": "Create "}Campground
+        {isUpdating ? "Update " : "Create "}Campground
       </h1>
       <form
         onSubmit={isUpdating ? handleUpdate : handleSubmit}
