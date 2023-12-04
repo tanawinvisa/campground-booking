@@ -1,3 +1,7 @@
+View Example in Document (https://drive.google.com/file/d/1cp8Lr1V7lZjblx2B66z5-GFe0Or-oXIP/view?usp=sharing)
+Click this link ypu will see the screen shot and diagram.
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
